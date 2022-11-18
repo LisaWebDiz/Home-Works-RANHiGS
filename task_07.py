@@ -31,3 +31,5 @@ for good_name in titles:
     total_price = total_price  + tuple['quantity'] * tuple['price']
 # вывод на консоль количества и стоимости товара на складе     
   print(f'{good_name} - {total_quantity} шт., общей стоимостью {total_price} рублей.')
+    
+# Отлично!
