@@ -29,3 +29,15 @@ sum_sec = int(str(sum_sec)[0])
 if int(sum_sec) >= 6:
   print(f'Три песни звучат {int(sum_min_sec[0])+1} минут')
 else: print(f'Три песни звучат {int(sum_min_sec[0])} минут')
+  
+# Хорошо.
+# Только choices() к сожалению может выдавать повторы. 
+# Попробуйте потом sample(
+# Пример
+# Решение 2
+time = 0
+for song in sample(my_favorite_songs, 3):
+    print(song[0])
+    time += song[1]
+
+print(f'Три песни звучат {round(time, 2)}')
