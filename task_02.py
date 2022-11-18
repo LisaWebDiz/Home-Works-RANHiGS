@@ -18,3 +18,19 @@ for elem in population:
   elem = int(elem[1])
   sum += elem
 print(f'Итого численность населения всех городов - {sum} человек')
+
+# Отлично. Можно еще в функцию обернуть
+# Решение 1 с функцией
+def total_sun(lst):
+    total = 0
+
+    for i in lst:
+        total += i[1]
+
+    return total
+
+# Решение 2 с функцией в одну строку
+def total_sum(lst):
+    return sum([i[1] for i in lst])
+
+print(total_sum(population))
