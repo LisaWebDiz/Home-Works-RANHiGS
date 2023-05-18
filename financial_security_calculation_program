@@ -1,0 +1,355 @@
+# coding:utf-8
+from datetime import date
+import time
+
+expenses = {}
+months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+months_30 = ['apr', 'jun', 'sep', 'nov']
+months_31 = ['jan', 'mar', 'may,', 'jul', 'aug', 'oct', 'dec']
+first_semester_months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun']
+second_semester_months = [7, 8, 9, 10, 11, 12]
+months_dict = {
+'jan': '1', 'feb': '2', 'mar': '3', 'apr': '4', 'may': '5', 'jun': '6', 'jul': '7', 'aug': '8', 'sep': '9', 'oct': '10', 'nov': '11', 'dec': '12',         
+}
+
+life_important_categories = []
+other_categories = []
+categories = [life_important_categories, other_categories]
+life_important_expenses = []
+other_expenses = []
+all_expenses_list = []
+
+def leap_year(a):
+  if (int(a) % 4 == 0 or int(a) % 400 == 0) and int(a) % 100 != 0:
+    return True
+  else:
+    return False
+
+print("""Привет!
+Я суперпрограмма, которая поможет Вам контролировать Ваши расходы и в перспективе - 
+определить Вашу финансовую подушку безопасности.""")
+time.sleep(5)
+
+print("""
+Финансовая подушка безопасности - это сумма, необходимая Вам для нормального существования
+в течение 6 месяцев, в случае если по каким-либо причинам Вы не сможете получать доход 
+в этот период.""")
+time.sleep(7)
+
+print("""
+Финансовая грамотность и финансовая безопасность начинаются именно с расчета
+и накопления этой суммы, так как только после этого разумно планировать большие
+траты и инвестирование в какие-либо проекты.""")
+time.sleep(7)
+
+print("""
+При ответственном отношении к записи Ваших ежедневных расходов анализ данных
+будет точным и поможет Вам вести грамотный в отношении финансов образ жизни.""")
+time.sleep(7)
+
+print("""
+Я - суперпрограмма - рассчитана на год использования. 
+Поэтому для начала я попрошу Вас сообщить мне, какой сейчас год. Пожалуйста, будьте
+внимательны при вводе. Если введенный параметр не будет соответствовать реальности,
+то программа не сможет предоставлять Вам корректный анализ данных.""")
+time.sleep(7)
+
+print("""
+Пожалуйста, имейте в виду, что для корректного расчета Вашей финансовой подушки 
+безопасности, анализ данных должен базироваться на достаточном объеме данных.
+Программа будет выводить анализ после каждого введенного Вами нового расхода, 
+однако реалистичным расчет будет после регулярного использования программы 
+в течение нескольких месяцев с условием ввода абсолютно всех Ваших расходов.""")
+time.sleep(7)
+
+while True:
+  year_input = input("\nВведите текущий год в формате 2022: ")
+  if len(year_input) != 4 or year_input.isdigit() == False or year_input[0] != '2' or year_input[1] != '0':
+    print("Давайте попробуем еще раз!") 
+  else:
+    start_year = int(year_input)
+    print("""\nСпасибо!
+А теперь давайте познакомимся с моими функциями.
+В любой момент Вы можете вызвать справку по программе при помощи команды help.
+Давайте попробуем!
+""")
+    break
+while True:
+  help_input = input("Введите команду help: ")
+  if help_input != 'help':
+    print("Давайте попробуем еще раз!") 
+  else: 
+    print("""
+help - справка по программе:
+команда help - вывод справки по программе
+команда add - ввод нового расхода
+команда show - запрос просмотра записанных расходов
+формат числа месяца - 1 15 31
+формат месяца - jan feb mar apr may jun jul aug sep oct nov dec
+формат категории расходов - одно любое слово 
+формат расхода - положительное целое число
+""")
+    break
+
+time.sleep(3)
+print("""
+Супер! 
+Теперь Вы знаете, как вызвать справку по программе, 
+если вдруг забудете, как ей пользоваться.""")
+time.sleep(5)
+
+print("""
+Теперь попробуем что-то посложнее.
+Введите команду add и нажмите "ввод".
+Далее введите через пробел следующие данные: 
+- сегодняшнюю дату в формате 1 или 30. 
+Внимание! Не ошибитесь при вводе сегодняшней даты! 
+С этой даты начнется анализ данных по вычислению суммы Вашей финансовой подушки безопасности.
+Внимание! Если Вы будете вводить 29, 30 или 31 число в том месяце, где его нет, 
+программа сообщит об ошибке
+- пробел
+- текущий месяц в формате первые три буквы месяца на английском языке в нижнем регистре
+- пробел
+- любое слово
+- пробел
+- любое число
+Потренируемся?
+""")
+
+while True:
+  command = input("Введите команду: ")
+  if command != 'add':
+    print("Давайте попробуем еще раз! Введите команду add") 
+  else: 
+    trening = input("Введите через пробел сегодняшнюю дату в формате 1 jan любое слово любое число: ").split()
+    if len(trening) != 4:
+      print("Неверное количество введенных параметров. Давайте попробуем еще раз!")
+    else:
+      if 1 > len(trening[0]) > 2 or trening[0][0] == '0' or trening[0].isdigit() == False or int(trening[0]) < 0:
+        print("Число месяца введено некорректно. Давайте попробуем еще раз")
+      else: 
+        if trening[1] not in months:
+          print("Месяц введен некорректно. Давайте попробуем еще раз")
+        else:
+          if trening[2].islower() == False and trening[2].isalpha == False: 
+            print("Слово введено некорректно. Давайте попробуем еще раз!")
+          else:
+            if trening[3].isdigit() == False:
+              print("Число введено некорректно. Давайте попробуем еще раз!")
+            else:
+              if trening[1] in months_30 and int(trening[0]) > 30:
+                print("Число месяца введено некорректно. Давайте попробуем еще раз")
+              else:
+                if trening[1] in months_31 and int(trening[0]) > 31:
+                  print("Число месяца введено некорректно. Давайте попробуем еще раз") 
+                else:
+                  if 'feb' in trening[1] and leap_year(start_year) == True and int(trening[0]) > 29:
+                    print("Число месяца введено некорректно. Давайте попробуем еще раз")
+                  else:
+                    if 'feb' in trening[1] and leap_year(start_year) == False and int(trening[0]) > 28:
+                      print("Число месяца введено некорректно. Давайте попробуем еще раз")
+                           
+                    else: 
+                      start_day = int(trening[0])
+                      start_month = int(months_dict[trening[1]])
+                      print("""
+Супер! У Вас получилось! Продолжим дальше!
+""")
+                      break
+
+print("""
+Каждому Вашему расходу будет присвоена категория, которую Вы сами для себя создадите
+и которую назовёте так, как Вам захочется. 
+Давайте попробуем!
+""")
+
+while True:
+  category = input("""
+Придумайте и введите одно слово - название категории для какого-нибудь расхода,
+например food: """)
+  if category.islower() == False or category.isalpha() ==  False:
+    print("Слово введено некорректно. Давайте попробуем еще раз!")
+    
+  else:
+    print(f'''
+Cупер!\nКаждый раз, когда Вы будете вводить новую категорию, она будет создана для\nпоследующего использования, но сначала еще один важный момент: каждая\nсозданная Вами категория расходов будет относиться либо к 'жизненно-важным',\nлибо к 'остальным'. Теперь подумайте, является ли категория "{category}" жизненно-важной?''')
+    
+    while True:
+      response = input("Введите y (да) или n (нет): ")   
+      if response != 'y' and response != 'n':
+        print("Некорректный ввод. Давайте попробуем еще раз!")
+      else:  
+        print("""
+Супер!
+Вы готовы к использованию программы! Начнем, наконец!
+Вводите команду add и приготовтесь ввести Ваш первый расход. 
+Посмотрим, что будет...""")
+        break
+    break
+    
+run = True
+while True:
+  command = input("\nВведите команду: ")
+  if command == 'add':
+    if not not life_important_categories or not not other_categories: 
+      print("Ранее созданные Вами категории:")
+      if not not life_important_categories:
+        print("Жизненно-важные:")   
+        for elem in life_important_categories:
+          print ("-", elem) 
+      if not not other_categories:  
+        print("Остальные:")  
+        for elem in other_categories:
+          print ("-", elem)
+      print("Используйте уже созданную категорию, либо вводите название новой")
+   
+    data = input("Введите дату расхода в формате 1 jan, название категории, расход: ").split()   
+    if len(data) != 4:
+      print("Неверное количество введенных параметров")
+    else:
+      if 1 > len(data[0]) > 2 or data[0][0] == '0' or data[0].isdigit() == False or int(data[0]) <= 0 or int(data[0]) > 31:
+        print("Число месяца введено некорректно")
+      else:
+        if data[1] not in months:
+          print("Месяц введен некорректно")
+        else:
+          if data[2].islower() == False or data[2].isalpha() == False: 
+            print("Название категории введено некорректно")
+          else:
+            if data[3].isdigit() == False:
+              print("Расход введен некорректно")
+            
+            else:
+              if data[1] in months_30 and int(data[0]) > 30:
+                print("Число месяца введено некорректно. Давайте попробуем еще раз")
+              else:
+                if data[1] in months_31 and int(data[0]) > 31:
+                  print("Число месяца введено некорректно. Давайте попробуем еще раз") 
+                else:
+                  if 'feb' in data[1] and start_month in first_semester_months and leap_year(start_year) == True and int(data[0]) > 29:
+                    print("Число месяца введено некорректно. Давайте попробуем еще раз")
+                  else:
+                    if 'feb' in data[1] and start_month in second_semester_months and leap_year(start_year+1) == True and int(data[0]) > 29:
+                      print("Число месяца введено некорректно. Давайте попробуем еще раз")
+                    else:
+                      if 'feb' in data[1] and start_month in first_semester_months and leap_year(start_year+1) == False and int(data[0]) > 28:
+                        print("Число месяца введено некорректно. Давайте попробуем еще раз")
+                      else:
+                        if 'feb' in data[1] and start_month in second_semester_months and leap_year(start_year+1) == False and int(data[0]) > 28:
+                          print("Число месяца введено некорректно. Давайте попробуем еще раз")
+                         
+                        else: 
+                          all_expenses_list.append(data)
+                          day = int(data[0])
+                          month = data[1]
+                          month_number = int(months_dict[data[1]])
+                          expense = int(data[3])
+                          if data[2] not in life_important_categories and data[2] not in other_categories:
+                            while True:
+                              response = input("Является ли категория {} жизненно-важной? Введите y (да) или n (нет): ".format(data[2]))
+                              if response != 'y' and response != 'n':
+                                print("Некорректный ввод. Давайте попробуем еще раз!")
+                              else:  
+                                if 'y' in response:
+                                  life_important_categories.append(data[2])
+                                  print("Категория {} внесена в 'жизненно-важные'".format(data[2]))
+                                  break
+                                else:
+                                  other_categories.append(data[2])
+                                  print("Категория {} внесена в 'остальные'".format(data[2]))
+                                  break
+               
+                          print("Добавлен новый расход: ", day, month, data[2], expense, "руб.")     
+                  
+                          if data[2] == data[2] in life_important_categories:    
+                            life_important_expenses.append(expense)    
+                
+                          if data[2] == data[2] in other_categories:    
+                            other_expenses.append(expense) 
+                
+                          if data[2] not in expenses:
+                            expenses[data[2]] = [expense]
+                          else:
+                            expenses[data[2]].append(expense)
+                          print("Расходы по этой категории за все время:", sum(expenses[data[2]]), "руб.")
+              
+                          if month not in expenses:
+                            expenses[month] = [expense]
+                          else:
+                            expenses[month].append(expense)
+                          print("Общая сумма расходов в этом месяце:", sum(expenses[month]), "руб.")    
+              
+                          total_sum = sum(life_important_expenses) + sum(other_expenses)
+                          print("Общая сумма расходов за все время:", total_sum, "руб.")
+             
+                          print("Общая сумма по жизненно-важным категориям:", sum(life_important_expenses), "руб.")  
+                          print("Общая сумма по остальным категориям:", sum(other_expenses), "руб.") 
+
+                          if sum(life_important_expenses) > 0 and sum(other_expenses) > 0:
+                            important_percent = int((sum(life_important_expenses) / total_sum) * 100)
+                            other_percent = int((sum(other_expenses) / total_sum) * 100)
+                            print(f'Процентное соотношение: жизненно-важные: {important_percent}%; остальные: {other_percent}%')
+
+                          print("Все расходы, записанные Вами в этом месяце:")
+           
+                          for data in all_expenses_list:  
+                            if month in data:
+                              current_month_expenses = []
+                              current_month_expenses.append(data)
+                              print (*data)
+
+                          if start_month in second_semester_months and month in first_semester_months:
+                            current_year = int(start_year) + 1
+                          else:
+                            current_year = int(start_year)
+                
+                          if start_day != day and start_month != month:
+                            d0 = date(start_year, start_month, start_day)
+                            d1 = date(current_year, month_number, day)
+                            delta = d1 - d0
+                            print("Сегодня", delta.days, "день использования программы")
+                          else:
+                            print("Сегодня 1 день использования программы")
+                          
+                          if start_day != day and start_month != month:
+                            day_expense = total_sum / delta.days
+                            print("Среднее арифметическое расходов за 1 день:", round(day_expense, 2), "руб.")
+                
+                            day_important_expense = sum(life_important_expenses) / delta.days
+                            print("Среднее арифметическое жизненно-важных расходов за 1 день:", round(day_important_expense, 2), "руб.")
+
+                          else:
+                            day_expense = total_sum
+                            day_important_expense = sum(life_important_expenses)
+                
+                          cushion_max = (day_expense * 180) + (day_expense * 180)*0.1
+                          cushion_min = (day_important_expense * 180) + (day_important_expense * 180)*0.1
+                          print("Приблизительный расчет финансовой подушки на 6 месяцев с учетом инфляции 10%: от", round(cushion_min, 2), "до", round(cushion_max, 2), "руб.")
+              
+  elif command == 'show':
+    show_input = input("Укажите месяц последней записи расходов в формате jan, если Вы хотите\nпосмотреть список всех записанных расходов в текущем месяце,\nлибо укажите total, если Вы хотите посмотреть список всех записанных расходов за все время: ")
+    if show_input == 'total':
+      print("Все записанные Вами расходы за все время:")
+      for data in all_expenses_list:  
+        print (*data)
+    elif show_input == month in data in current_month_expenses:
+      for data in all_expenses_list:  
+        if month in data:
+          print (*data)
+
+    else: print("Запрашиваемый период введен некорректно")
+
+  elif command == 'help':
+    print("""
+help - справка по программе:
+команда help - вывод справки по программе
+команда add - ввод нового расхода
+команда show - запрос просмотра записанных расходов
+формат числа месяца - 1 15 31
+формат месяца - jan feb mar apr may jun jul aug sep oct nov dec
+формат категории расходов - одно любое слово 
+формат расхода - положительное целое число
+""")
+    
+  else:
+    print("Такой команды нет. Воспользуйтесь командой help для вывода справки по программе")
