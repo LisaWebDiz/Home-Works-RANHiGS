@@ -1,0 +1,33 @@
+def calc(a, b, c):
+    if number[i] == a and number[i+1] == b:
+            number[i] = c
+            number[i+1] = '0'
+
+def calc_1(a, b):
+    if number[i] == a:
+        number[i] = b
+
+while True:
+    number = list(input("Введите число: "))
+    # print(number)
+
+    for i in range(0, (len(number)-1)):
+        calc('I', 'V', '4')
+        calc('I', 'X', '9')
+        calc('X', 'L', '40')
+        calc('X', 'C', '90')
+        calc('C', 'D', '400')
+        calc('C', 'M', '900')
+
+    # print(number)
+    for i in range(0, len(number)):
+        calc_1('I', '1')
+        calc_1('V', '5')
+        calc_1('X', '10')
+        calc_1('L', '50')
+        calc_1('C', '100')
+        calc_1('D', '500')
+        calc_1('M', '1000')
+
+        number[i] = int(number[i])
+    print(sum(number))
